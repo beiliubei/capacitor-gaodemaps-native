@@ -15,13 +15,20 @@
   "author": "@beiliubei",
   "license": "MIT",
   "dependencies": {
-    "@capacitor/cli": "2.4.6",
     "@capacitor/core": "2.4.6"
   },
   "devDependencies": {
     "@capacitor/android": "2.4.6",
     "@capacitor/ios": "2.4.6",
-    "all-contributors-cli": "^6.20.0",
+    "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "@typescript-eslint/parser": "^4.29.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^7.15.1",
+    "husky": "^4.2.5",
+    "np": "^6.2.4",
+    "prettier": "^2.0.5",
+    "prettier-plugin-java": "^0.8.0",
+    "pretty-quick": "^2.0.1",
     "rimraf": "^3.0.2",
     "typescript": "^3.9.5"
   },
@@ -29,7 +36,7 @@
     "dist/",
     "ios/",
     "android/",
-    "CapacitorCommunityCapacitorGaodemapsNative.podspec"
+    "BeiliubeiCapacitorGaodemapsNative.podspec"
   ],
   "keywords": [
     "capacitor",

@@ -1,7 +1,7 @@
 import Foundation
 import Capacitor
-#import <AMapFoundationKit/AMapFoundationKit.h>
-#import <AMapLocationKit/AMapLocationKit.h>
+import AMapFoundationKit
+import AMapLocationKit
 
 
 @objc(CapacitorGaodeMaps)
@@ -17,16 +17,18 @@ public class CapacitorGaodeMaps: CAPPlugin {
 
     @objc func initialize(_ call: CAPPluginCall) {
 
-        self.GAODE_MAPS_KEY = call.getString("key", "")
+        self.GAODE_MAPS_KEY = call.getString("key", "") ?? ""
 
         if self.GAODE_MAPS_KEY.isEmpty {
             call.reject("Gaode MAPS API key missing!")
             return
         }
 
+        print("initialize " + self.GAODE_MAPS_KEY)
+        
         AMapServices.shared().apiKey = self.GAODE_MAPS_KEY
 
-        self.locationManager = AMapLocationManager()
+        self.mLocationManager = AMapLocationManager()
 
         call.resolve([
             "initialized": true
@@ -173,8 +175,8 @@ public class CapacitorGaodeMaps: CAPPlugin {
 //     }
 
     @objc func myLocation(_ call: CAPPluginCall) {
+        print("myLocation");
         DispatchQueue.main.async {
-//             let location = self.mapViewController.GMapView.myLocation;
             self.mLocationManager.requestLocation(withReGeocode: true, completionBlock: { [weak self] (location: CLLocation?, reGeocode: AMapLocationReGeocode?, error: Error?) in
 
                 if let error = error {
@@ -201,8 +203,8 @@ public class CapacitorGaodeMaps: CAPPlugin {
                         //没有错误：location有返回值，regeocode是否有返回值取决于是否进行逆地理操作，进行annotation的添加
                         call.resolve([
                             "latitude": location?.coordinate.latitude as Any,
-                            "longitude": location?.coordinate.longitude as Any
-                            "address": reGeocode.formattedAddress as Any
+                            "longitude": location?.coordinate.longitude as Any,
+                            "address": reGeocode?.formattedAddress as Any
                         ])
                     }
                 }
