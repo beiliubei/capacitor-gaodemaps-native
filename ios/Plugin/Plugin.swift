@@ -4,8 +4,8 @@ import AMapFoundationKit
 import AMapLocationKit
 
 
-@objc(CapacitorGaodeMaps)
-public class CapacitorGaodeMaps: CAPPlugin {
+@objc(NativeGaoDeMap)
+public class NativeGaoDeMap: CAPPlugin {
 
     var GAODE_MAPS_KEY: String = "";
     var mLocationManager: AMapLocationManager!;
@@ -25,7 +25,7 @@ public class CapacitorGaodeMaps: CAPPlugin {
         }
 
         print("initialize " + self.GAODE_MAPS_KEY)
-        
+
         AMapServices.shared().apiKey = self.GAODE_MAPS_KEY
 
         self.mLocationManager = AMapLocationManager()
@@ -201,11 +201,6 @@ public class CapacitorGaodeMaps: CAPPlugin {
                     }
                     else {
                         //没有错误：location有返回值，regeocode是否有返回值取决于是否进行逆地理操作，进行annotation的添加
-                        call.resolve([
-                            "latitude": location?.coordinate.latitude as Any,
-                            "longitude": location?.coordinate.longitude as Any,
-                            "address": reGeocode?.formattedAddress as Any
-                        ])
                     }
                 }
 
@@ -216,6 +211,11 @@ public class CapacitorGaodeMaps: CAPPlugin {
                 if let reGeocode = reGeocode {
                     NSLog("reGeocode:%@", reGeocode)
                 }
+                call.resolve([
+                    "latitude": location?.coordinate.latitude as Any,
+                    "longitude": location?.coordinate.longitude as Any,
+                    "address": reGeocode?.formattedAddress as Any
+                ])
             })
         }
     }
