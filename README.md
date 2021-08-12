@@ -30,7 +30,8 @@ npx cap sync
 ### Importing & Initializing the plugin
 
 ```javascript
-import { CapacitorGaodeMaps } from '@beiliubei/capacitor-gaodemaps-native';
+import {Plugins} from "@capacitor/core";
+const { NativeGaoDeMap } = Plugins
 
 /* initialize() is important for iOS,
   Android doesn't need any initialization.
@@ -41,3 +42,12 @@ await CapacitorGaodeMaps.initialize({
 ```
 
 ### Usage
+```javascript
+NativeGaoDeMap.myLocation().then((r: any) => {
+                console.info("myLocation: " + r)
+                
+            }).catch((e: any) => {
+                console.info("myLocation error: " + e)
+            })
+
+```
