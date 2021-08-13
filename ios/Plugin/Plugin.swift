@@ -200,6 +200,7 @@ public class NativeGaoDeMap: CAPPlugin {
                         call.reject("逆地理错误:{\(error.code) - \(error.localizedDescription)};")
                     }
                     else {
+                        call.reject("定位失败:{\(error.code) - \(error.localizedDescription)};")
                         //没有错误：location有返回值，regeocode是否有返回值取决于是否进行逆地理操作，进行annotation的添加
                     }
                 }
