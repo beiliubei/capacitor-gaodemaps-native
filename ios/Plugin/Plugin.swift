@@ -8,7 +8,7 @@ import AMapLocationKit
 public class NativeGaoDeMap: CAPPlugin {
 
     var GAODE_MAPS_KEY: String = "";
-    var mLocationManager: AMapLocationManager!;
+    var mLocationManager: AMapLocationManager?;
 //     var mapViewController: GMViewController!;
 //     var streetViewController: GMStreetViewController!;
 //     var DEFAULT_ZOOM: Double = 12.0;
@@ -25,7 +25,7 @@ public class NativeGaoDeMap: CAPPlugin {
         }
 
         print("initialize " + self.GAODE_MAPS_KEY)
-
+        
         AMapServices.shared().apiKey = self.GAODE_MAPS_KEY
 
         self.mLocationManager = AMapLocationManager()
@@ -177,7 +177,7 @@ public class NativeGaoDeMap: CAPPlugin {
     @objc func myLocation(_ call: CAPPluginCall) {
         print("myLocation");
         DispatchQueue.main.async {
-            self.mLocationManager.requestLocation(withReGeocode: true, completionBlock: { [weak self] (location: CLLocation?, reGeocode: AMapLocationReGeocode?, error: Error?) in
+            self.mLocationManager?.requestLocation(withReGeocode: true, completionBlock: { [weak self] (location: CLLocation?, reGeocode: AMapLocationReGeocode?, error: Error?) in
 
                 if let error = error {
                     let error = error as NSError
