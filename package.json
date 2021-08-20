@@ -1,6 +1,6 @@
 {
   "name": "@beiliubei/capacitor-gaodemaps-native",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Plugin using native Maps API for Android and iOS.",
   "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
