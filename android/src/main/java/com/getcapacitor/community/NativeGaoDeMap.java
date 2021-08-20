@@ -11,6 +11,11 @@ import com.getcapacitor.NativePlugin;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
+import com.yanzhenjie.permission.Action;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.runtime.Permission;
+
+import java.util.List;
 
 @NativePlugin(
         permissions = {
@@ -25,17 +30,37 @@ public class NativeGaoDeMap extends Plugin {
 
     @PluginMethod()
     public void initialize(final PluginCall call) {
-        mLocationClient = new AMapLocationClient(getContext());
-        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
-        mLocationOption.setOnceLocation(true);
-        mLocationOption.setOnceLocationLatest(true);
-        mLocationOption.setNeedAddress(true);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
+        AndPermission.with(getContext())
+                .runtime()
+                .permission(Permission.ACCESS_FINE_LOCATION)
+                .onGranted(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        call.resolve();
+                        mLocationClient = new AMapLocationClient(getContext());
+                        AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
+                        mLocationOption.setOnceLocation(true);
+                        mLocationOption.setOnceLocationLatest(true);
+                        mLocationOption.setNeedAddress(true);
+                        //给定位客户端对象设置定位参数
+                        mLocationClient.setLocationOption(mLocationOption);
+                    }
+                })
+                .onDenied(new Action<List<String>>() {
+                    @Override
+                    public void onAction(List<String> data) {
+                        call.error("定位失败，请打开定位权限");
+                    }
+                })
+                .start();
     }
 
     @PluginMethod()
     public void myLocation(final PluginCall call) {
+        if (mLocationClient == null){
+            call.error("请先初始化定位模块");
+            return;
+        }
         AMapLocationListener mLocationListener = new AMapLocationListener() {
             @Override
             public void onLocationChanged(AMapLocation aMapLocation) {
