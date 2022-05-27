@@ -8,12 +8,12 @@ end
 
 target 'Plugin' do
   use_frameworks!
-  pod 'AMapLocation'
+  pod 'AMapLocation', '2.6.9'
   capacitor_pods
 end
 
 target 'PluginTests' do
   use_frameworks!
-  pod 'AMapLocation'
+  pod 'AMapLocation', '2.6.9'
   capacitor_pods
 end
